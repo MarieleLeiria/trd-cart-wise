@@ -1,0 +1,118 @@
+# Índice legível por máquina do repositório agentflow-trd.
+# O contrato de manifesto e frontmatter está em agentflow-architecture:adr-0006.
+# Os campos de cada documento devem ser idênticos aos do frontmatter do arquivo.
+
+schema_version: 1
+repository: agentflow-trd
+product: cart-wise
+language: pt-BR
+
+vocabulary:
+  type:
+    overview: Requisitos gerais, glossário e fronteira do MVP.
+    nfr: Requisitos não funcionais mensuráveis.
+    store-catalog: Lojas suportadas, permissões de host e fixtures.
+    contract: Mensagens, catálogo de falhas e textos de feedback.
+    entity-rules: Regras de negócio sobre entidades, preço, dedupe e variantes.
+    feature: Uma feature do MVP, com requisitos e critérios de aceitação.
+
+  status:
+    proposed: Orientação. O agente segue, mas sinaliza no resultado quando depende do documento.
+    accepted: Obrigatório.
+    superseded: Ignorado. Ver superseded_by.
+    deprecated: Ignorado.
+    rejected: Ignorado.
+
+  consult_when:
+    any-task: Toda tarefa.
+    change-capture: Alterar a detecção, a extração ou o feedback da captura.
+    add-store-adapter: Adicionar ou corrigir suporte a uma loja.
+    change-ui: Alterar popup ou dashboard.
+    change-storage: Alterar persistência, índices ou migrações.
+    change-data-model: Alterar entidades, schemas ou regras de deduplicação.
+    change-list: Alterar busca, filtros, moeda ou ordenação da lista.
+    change-removal: Alterar a remoção de um item salvo.
+
+section_order:
+  overview: [Objetivo, Glossário, Requisitos do MVP, Fora de escopo, Regras para agentes]
+  nfr: [Objetivo, Requisitos, Questões em aberto, Regras para agentes]
+  store-catalog: [Objetivo, Lojas do MVP, Adaptador genérico, Fixtures, Questões em aberto, Regras para agentes]
+  contract: [Objetivo, Mensagens, Motivos de falha, Feedback, Questões em aberto, Regras para agentes]
+  entity-rules: [Objetivo, Regras de negócio, Identidade e variantes, Questões em aberto, Regras para agentes]
+  feature: [Objetivo, Escopo, Requisitos funcionais, Critérios de aceitação, Restrições, Questões em aberto, Regras para agentes]
+
+templates:
+  feature: templates/feature.md
+
+documents:
+  - id: overview
+    path: docs/00-overview.md
+    type: overview
+    status: proposed
+    consult_when: [any-task]
+    applies_to: ["**"]
+    tags: [produto, escopo, glossario]
+
+  - id: nfr
+    path: docs/01-nfr.md
+    type: nfr
+    status: proposed
+    consult_when: [any-task]
+    applies_to: ["**"]
+    tags: [nfr, desempenho, privacidade]
+
+  - id: stores
+    path: docs/02-stores.md
+    type: store-catalog
+    status: proposed
+    consult_when: [add-store-adapter, change-capture]
+    applies_to: ["src/adapters/**", "manifest.config.*"]
+    tags: [lojas, fixtures, permissoes]
+
+  - id: contracts
+    path: docs/03-contracts.md
+    type: contract
+    status: proposed
+    consult_when: [change-capture, change-ui, change-storage]
+    applies_to: ["src/shared/**", "src/content/**", "src/background/**", "src/ui/**"]
+    tags: [mensagens, erros, toast, badge]
+
+  - id: entities
+    path: docs/04-entities.md
+    type: entity-rules
+    status: proposed
+    consult_when: [change-data-model, change-capture, change-storage]
+    applies_to: ["src/shared/**", "src/storage/**", "src/background/**"]
+    tags: [entidades, dedupe, variante, preco]
+
+  - id: feat-auto-capture
+    path: docs/features/feat-auto-capture.md
+    type: feature
+    status: proposed
+    consult_when: [change-capture]
+    applies_to: ["src/content/**", "src/adapters/**", "src/background/**"]
+    tags: [captura, clique]
+
+  - id: feat-manual-save
+    path: docs/features/feat-manual-save.md
+    type: feature
+    status: proposed
+    consult_when: [change-capture, change-ui]
+    applies_to: ["src/ui/**", "src/content/**", "src/background/**"]
+    tags: [captura, manual, popup]
+
+  - id: feat-item-list
+    path: docs/features/feat-item-list.md
+    type: feature
+    status: proposed
+    consult_when: [change-list, change-ui]
+    applies_to: ["src/ui/**", "src/storage/**"]
+    tags: [lista, busca, moeda]
+
+  - id: feat-remove-item
+    path: docs/features/feat-remove-item.md
+    type: feature
+    status: proposed
+    consult_when: [change-removal, change-ui]
+    applies_to: ["src/ui/**", "src/storage/**"]
+    tags: [remocao]
